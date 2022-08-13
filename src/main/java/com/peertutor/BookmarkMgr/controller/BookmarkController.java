@@ -29,8 +29,8 @@ public class BookmarkController {
     }
     @GetMapping(path="/public-api")
     public @ResponseBody String callPublicApi() {
-        String url = appConfig.getAppTwo().get("url");
-        String port = appConfig.getAppTwo().get("port");
+        String url = appConfig.getStudentMgr().get("url");
+        String port = appConfig.getStudentMgr().get("port");
 
         String endpoint = "https://api.publicapis.org/entries"; //url+":"+port;
         System.out.println("endpoint" + endpoint);
@@ -41,10 +41,10 @@ public class BookmarkController {
         return response.toString();
     }
 
-    @GetMapping(path="/call-app-classrmsvc")
+    @GetMapping(path="/call-app-student-mgr")
     public @ResponseBody String callAppTwo() {
-        String url = appConfig.getAppTwo().get("url");
-        String port = appConfig.getAppTwo().get("port");
+        String url = appConfig.getStudentMgr().get("url");
+        String port = appConfig.getStudentMgr().get("port");
 
         String endpoint = url+":"+port;
         System.out.println("endpoint" + endpoint);
