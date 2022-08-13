@@ -24,14 +24,11 @@ public class BookmarkController {
 
         System.out.println("appConfig="+ appConfig.toString());
         System.out.println("ver"+ SpringVersion.getVersion());
-        return "Hello world Spring Ver = " + SpringVersion.getVersion() ;
+        return "Hello world Spring Ver = " + SpringVersion.getVersion() + "From Bookmark mgr";
 
     }
     @GetMapping(path="/public-api")
     public @ResponseBody String callPublicApi() {
-        String url = appConfig.getStudentMgr().get("url");
-        String port = appConfig.getStudentMgr().get("port");
-
         String endpoint = "https://api.publicapis.org/entries"; //url+":"+port;
         System.out.println("endpoint" + endpoint);
 
@@ -46,7 +43,7 @@ public class BookmarkController {
         String url = appConfig.getStudentMgr().get("url");
         String port = appConfig.getStudentMgr().get("port");
 
-        String endpoint = url+":"+port;
+        String endpoint = url+":"+port + "/";
         System.out.println("endpoint" + endpoint);
 
         RestTemplate restTemplate = new RestTemplate();
