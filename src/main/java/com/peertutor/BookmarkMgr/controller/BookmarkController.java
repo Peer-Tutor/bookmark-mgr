@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @Controller
-@RequestMapping(path="/bookmark")
+@RequestMapping(path="/bookmark-mgr")
 public class BookmarkController {
     @Autowired
     AppConfig appConfig;

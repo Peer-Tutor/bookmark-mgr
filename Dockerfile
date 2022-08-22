@@ -16,7 +16,7 @@ COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
 COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
 ENTRYPOINT ["java" ,"-cp","app:app/lib/*","com.peertutor.BookmarkMgr.BookmarkMgrApplication"]
-CMD ["-Dspring.profiles.active=docker"]
+
 # to use for ci cd
 # ENTRYPOINT ["java" ,"-cp","app:app/lib/*","com.peertutor.BookmarkMgr.BookmarkMgrApplication", "-Dspring.profiles.active=docker"]
 # -Dspring.profiles.active=aws
