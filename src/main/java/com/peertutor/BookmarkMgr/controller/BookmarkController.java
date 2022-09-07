@@ -43,7 +43,7 @@ public class BookmarkController {
         String url = appConfig.getStudentMgr().get("url");
         String port = appConfig.getStudentMgr().get("port");
 
-        String endpoint = url+":"+port + "/";
+        String endpoint = url+"/" ;
         System.out.println("endpoint" + endpoint);
 
         RestTemplate restTemplate = new RestTemplate();
