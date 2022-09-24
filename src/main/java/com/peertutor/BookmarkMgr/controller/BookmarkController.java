@@ -53,7 +53,7 @@ public class BookmarkController {
     }
     @GetMapping(path="/health")
     public @ResponseBody String healthCheck(){
-        return "Ok";
+        return "Ok 2";
     }
 
     @PostMapping(path = "/add")
