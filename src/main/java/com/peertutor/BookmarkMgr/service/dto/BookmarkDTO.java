@@ -1,24 +1,22 @@
-package com.peertutor.BookmarkMgr.model;
+package com.peertutor.BookmarkMgr.service.dto;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
+import com.peertutor.BookmarkMgr.model.Bookmark;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class BookmarkDTO implements Serializable {
 
-@Entity
-@Table(name = "bookmark")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Bookmark {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "tutor_id", nullable = false, unique = true)
     private Long tutorID;
-
-    @Column(name = "student_id", nullable = false)
     private Long studentID;
 
     public Long getID() {
@@ -60,6 +58,11 @@ public class Bookmark {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hashCode(getID());
+    }
+
+    @Override
     public String toString() {
         return "Bookmark {" +
                 "id=" + id +
@@ -67,4 +70,5 @@ public class Bookmark {
                 ", Student ID='" + studentID + '\'' +
                 '}';
     }
+
 }

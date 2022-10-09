@@ -1,16 +1,19 @@
 package com.peertutor.BookmarkMgr.controller;
 
-import com.peertutor.BookmarkMgr.model.Bookmark;
+import com.peertutor.BookmarkMgr.model.viewmodel.request.BookmarkReq;
+import com.peertutor.BookmarkMgr.model.viewmodel.response.BookmarkRes;
 import com.peertutor.BookmarkMgr.repository.BookmarkRepository;
+import com.peertutor.BookmarkMgr.service.AuthService;
+import com.peertutor.BookmarkMgr.service.BookmarkService;
 import com.peertutor.BookmarkMgr.util.AppConfig;
+import com.peertutor.BookmarkMgr.model.Bookmark;
+import com.peertutor.BookmarkMgr.service.dto.BookmarkDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.SpringVersion;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping(path="/bookmark-mgr")
@@ -19,67 +22,52 @@ public class BookmarkController {
     AppConfig appConfig;
     @Autowired
     private BookmarkRepository bookmarkRepository;// = new CustomerRepository();
-    @GetMapping(path="/")
-    public @ResponseBody String defaultResponse(){
-
-        System.out.println("appConfig="+ appConfig.toString());
-        System.out.println("ver"+ SpringVersion.getVersion());
-        return "Hello world Spring Ver = " + SpringVersion.getVersion() + "From Bookmark mgr";
-
-    }
-    @GetMapping(path="/public-api")
-    public @ResponseBody String callPublicApi() {
-        String endpoint = "https://api.publicapis.org/entries"; //url+":"+port;
-        System.out.println("endpoint" + endpoint);
-
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response = restTemplate.getForEntity(endpoint, String.class);
-
-        return response.toString();
-    }
-
-    @GetMapping(path="/call-app-student-mgr")
-    public @ResponseBody String callAppTwo() {
-        String url = appConfig.getStudentMgr().get("url");
-        String port = appConfig.getStudentMgr().get("port");
-
-        String endpoint = url+"/" ;
-        System.out.println("endpoint" + endpoint);
-
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response = restTemplate.getForEntity(endpoint, String.class);
-
-        return response.toString();
-    }
+    @Autowired
+    private BookmarkService bookmarkService;
+    @Autowired
+    private AuthService authService;
     @GetMapping(path="/health")
     public @ResponseBody String healthCheck(){
         return "Ok 2";
     }
 
-    @PostMapping(path = "/add")
-    public @ResponseBody String addNewCustomer(@RequestBody Map<String, String> customerDTO) {
+    @PostMapping(path = "/bookmark")
+    public @ResponseBody ResponseEntity<BookmarkRes> createBookmark(@RequestBody @Valid BookmarkReq req) {
+        boolean result = authService.getAuthentication(req.name, req.sessionToken);
+        if (!result) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
 
-        // <validation logic here>
-        // todo: generalise validation logic
+        BookmarkDTO savedBookmark;
 
-        // <retrieve data from request body>
-        System.out.println("customerMap= " +customerDTO);
-        String firstName = customerDTO.get("firstName");
-        String lastName = customerDTO.get("lastName");
-        // create DTO
-        Bookmark customer = new Bookmark(firstName, lastName);
+        savedBookmark = bookmarkService.createBookmark(req);
 
-        // dao layer: save object to db
-        bookmarkRepository.save(customer);
+        if (savedBookmark == null) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+        }
 
-        // todo: better logging
-        // todo: generalise response message
-        return "Saved";
+        BookmarkRes res = new BookmarkRes(savedBookmark);
+
+        return ResponseEntity.ok().body(res);
     }
-    @GetMapping(path="/all")
-    public @ResponseBody Iterable<Bookmark> getAllCustomers (){
 
-        return bookmarkRepository.findAll();
+    @GetMapping(path = "/bookmark")
+    public @ResponseBody ResponseEntity<BookmarkRes> getBookmark(@RequestBody @Valid BookmarkReq req) {
+        boolean result = authService.getAuthentication(req.name, req.sessionToken);
+        if (!result) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        BookmarkDTO bookmarkRetrieved;
+        bookmarkRetrieved = bookmarkService.getBookmark(req.id);
+
+        if (bookmarkRetrieved == null) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        }
+
+        BookmarkRes res = new BookmarkRes(bookmarkRetrieved);
+
+        return ResponseEntity.ok().body(res);
     }
 
 
