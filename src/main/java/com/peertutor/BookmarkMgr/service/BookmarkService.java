@@ -25,9 +25,10 @@ public class BookmarkService {
         this.bookmarkMapper = bookmarkMapper;
     }
 
+    // get bookmark by student id
     public BookmarkDTO getBookmark(Long id) {
         Bookmark bookmark;
-        bookmark = bookmarkRepository.findByTutorID(id);
+        bookmark = bookmarkRepository.findByStudentID(id);
 
         if (bookmark == null) {
             return null;
@@ -37,15 +38,17 @@ public class BookmarkService {
         return result;
     }
 
+    // create bookmark by tutor id
     public BookmarkDTO createBookmark(BookmarkReq req){
         Bookmark bookmark = bookmarkRepository.findByTutorID(req.id);
 
+        // if is new create new bookmark
         if(bookmark == null) {
             bookmark = new Bookmark();
             bookmark.setID(req.id);
+            bookmark.setTutorID(req.tutorID);
+            bookmark.setStudentID(req.studentID);
         }
-        bookmark.setTutorID(req.tutorID);
-        bookmark.setStudentID(req.studentID);
 
         try {
             bookmark = bookmarkRepository.save(bookmark);
@@ -58,4 +61,5 @@ public class BookmarkService {
 
         return result;
     }
+
 }

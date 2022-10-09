@@ -9,7 +9,7 @@
 		<relativePath/>
 	</parent>
 	<groupId>com.peertutor</groupId>
-	<artifactId>StudentMgr</artifactId>
+	<artifactId>BookmarkMgr</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>BookmarkMgr</name>
 	<description>Demo project for Spring Boot</description>

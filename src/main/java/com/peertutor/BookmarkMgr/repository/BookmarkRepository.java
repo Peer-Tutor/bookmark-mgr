@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
     Bookmark findById(long id);
     Bookmark findByTutorID(long tutorID);
-
+    Bookmark findByStudentID(long studentID);
 }
 
