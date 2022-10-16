@@ -1,4 +1,4 @@
-package com.peertutor.BookmarMgr.util;
+package com.peertutor.BookmarkMgr.util;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
