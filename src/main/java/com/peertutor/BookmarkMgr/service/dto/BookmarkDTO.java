@@ -19,11 +19,11 @@ public class BookmarkDTO implements Serializable {
     private Long tutorID;
     private Long studentID;
 
-    public Long getID() {
+    public Long getId() {
         return id;
     }
 
-    public void setID(Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -51,15 +51,15 @@ public class BookmarkDTO implements Serializable {
         }
 
         Bookmark bookmark = (Bookmark) o;
-        if (bookmark.getID() == null || getID() == null) {
+        if (bookmark.getId() == null || getId() == null) {
             return false;
         }
-        return Objects.equals(getID(), bookmark.getID());
+        return Objects.equals(getId(), bookmark.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getID());
+        return Objects.hashCode(getId());
     }
 
     @Override

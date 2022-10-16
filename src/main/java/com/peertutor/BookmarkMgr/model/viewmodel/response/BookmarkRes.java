@@ -9,7 +9,7 @@ public class BookmarkRes {
     public Long studentID;
 
     public BookmarkRes(BookmarkDTO bookmarkDto){
-        this.id = bookmarkDto.getID();
+        this.id = bookmarkDto.getId();
         this.tutorID = bookmarkDto.getTutorID();
         this.studentID = bookmarkDto.getStudentID();
     }

@@ -15,19 +15,11 @@ public class Bookmark {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "tutor_id", nullable = false, unique = true)
+    @Column(name = "tutor_id", nullable = false)
     private Long tutorID;
 
     @Column(name = "student_id", nullable = false)
     private Long studentID;
-
-    public Long getID() {
-        return id;
-    }
-
-    public void setID(Long id) {
-        this.id = id;
-    }
 
     public Long getTutorID() {
         return tutorID;
@@ -53,10 +45,10 @@ public class Bookmark {
         }
 
         Bookmark bookmark = (Bookmark) o;
-        if (bookmark.getID() == null || getID() == null) {
+        if (bookmark.getId() == null || getId() == null) {
             return false;
         }
-        return Objects.equals(getID(), bookmark.getID());
+        return Objects.equals(getId(), bookmark.getId());
     }
 
     @Override
@@ -66,5 +58,13 @@ public class Bookmark {
                 ", Tutor ID='" + tutorID + '\'' +
                 ", Student ID='" + studentID + '\'' +
                 '}';
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
