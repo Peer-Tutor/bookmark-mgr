@@ -78,10 +78,10 @@ public class BookmarkController {
             @RequestParam(name = "id") Optional<Long> id,
             @RequestParam(name = "tutorId") Optional<Long> tutorId,
             @RequestParam(name = "studentId") Optional<Long> studentId) {
-        /*boolean result = authService.getAuthentication(name, sessionToken);
+        boolean result = authService.getAuthentication(name, sessionToken);
         if (!result) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        }*/
+        }
 
         if (id.isPresent()) {
             bookmarkService.deleteBookmarkById(id.get());

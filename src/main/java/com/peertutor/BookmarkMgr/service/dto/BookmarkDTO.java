@@ -1,6 +1,7 @@
 package com.peertutor.BookmarkMgr.service.dto;
 
 import com.peertutor.BookmarkMgr.model.Bookmark;
+import com.peertutor.BookmarkMgr.model.Tutor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,6 +19,7 @@ public class BookmarkDTO implements Serializable {
     private Long id;
     private Long tutorID;
     private Long studentID;
+    private Tutor tutor;
 
     public Long getId() {
         return id;
