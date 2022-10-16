@@ -21,6 +21,10 @@ public class Bookmark {
     @Column(name = "student_id", nullable = false)
     private Long studentID;
 
+    @OneToOne
+    @JoinColumn(name = "tutor_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private Tutor tutor;
+
     public Long getTutorID() {
         return tutorID;
     }
@@ -66,5 +70,13 @@ public class Bookmark {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Tutor getTutor() {
+        return tutor;
+    }
+
+    public void setTutor(Tutor tutor) {
+        this.tutor = tutor;
     }
 }
