@@ -21,7 +21,7 @@ public class Bookmark {
     @Column(name = "student_id", nullable = false)
     private Long studentID;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "tutor_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Tutor tutor;
 
