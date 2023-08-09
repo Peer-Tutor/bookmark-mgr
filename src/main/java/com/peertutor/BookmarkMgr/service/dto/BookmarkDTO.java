@@ -1,6 +1,7 @@
 package com.peertutor.BookmarkMgr.service.dto;
 
 import com.peertutor.BookmarkMgr.model.Bookmark;
+import com.peertutor.BookmarkMgr.model.Tutor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,12 +19,13 @@ public class BookmarkDTO implements Serializable {
     private Long id;
     private Long tutorID;
     private Long studentID;
+    private Tutor tutor;
 
-    public Long getID() {
+    public Long getId() {
         return id;
     }
 
-    public void setID(Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -51,15 +53,15 @@ public class BookmarkDTO implements Serializable {
         }
 
         Bookmark bookmark = (Bookmark) o;
-        if (bookmark.getID() == null || getID() == null) {
+        if (bookmark.getId() == null || getId() == null) {
             return false;
         }
-        return Objects.equals(getID(), bookmark.getID());
+        return Objects.equals(getId(), bookmark.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getID());
+        return Objects.hashCode(getId());
     }
 
     @Override

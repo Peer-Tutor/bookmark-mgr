@@ -12,15 +12,11 @@ public class BookmarkReq {
     @NotEmpty
     public String sessionToken;
 
-    @NotNull
-    @NotEmpty
     public Long id;
 
     @NotNull
-    @NotEmpty
     public Long tutorID;
 
     @NotNull
-    @NotEmpty
     public Long studentID;
 }

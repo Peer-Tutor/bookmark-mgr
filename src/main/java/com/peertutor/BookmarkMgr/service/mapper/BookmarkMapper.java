@@ -14,12 +14,12 @@ public interface BookmarkMapper extends EntityMapper<BookmarkDTO, Bookmark> {
 
     BookmarkDTO toDto(Bookmark bookmark);
 
-    default Bookmark fromID(Long id) {
+    default Bookmark fromId(Long id) {
         if (id == null) {
             return null;
         }
         Bookmark bookmark = new Bookmark();
-        bookmark.setID(id);
+        bookmark.setId(id);
         return bookmark;
     }
 }

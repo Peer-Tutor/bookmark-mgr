@@ -12,8 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping(path="/bookmark-mgr")
@@ -28,7 +31,7 @@ public class BookmarkController {
     private AuthService authService;
     @GetMapping(path="/health")
     public @ResponseBody String healthCheck(){
-        return "Ok";
+        return "Ok 2";
     }
 
     @PostMapping(path = "/bookmark")
@@ -52,23 +55,40 @@ public class BookmarkController {
     }
 
     @GetMapping(path = "/bookmark")
-    public @ResponseBody ResponseEntity<BookmarkRes> getBookmark(@RequestBody @Valid BookmarkReq req) {
-        boolean result = authService.getAuthentication(req.name, req.sessionToken);
+    public @ResponseBody ResponseEntity<List<BookmarkDTO>> getBookmark(
+            @RequestParam(name = "name") String name,
+            @RequestParam(name = "sessionToken") String sessionToken,
+            @RequestParam(name = "studentId") Long studentId) {
+        boolean result = authService.getAuthentication(name, sessionToken);
         if (!result) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
 
-        BookmarkDTO bookmarkRetrieved;
-        bookmarkRetrieved = bookmarkService.getBookmark(req.id);
+        List<BookmarkDTO> bookmarkRetrieved;
+        bookmarkRetrieved = bookmarkService.getBookmark(studentId);
 
-        if (bookmarkRetrieved == null) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
-        }
-
-        BookmarkRes res = new BookmarkRes(bookmarkRetrieved);
-
-        return ResponseEntity.ok().body(res);
+        return ResponseEntity.ok().body(bookmarkRetrieved);
     }
 
+    @DeleteMapping(path = "/bookmark")
+    @Transactional
+    public @ResponseBody ResponseEntity<List<BookmarkDTO>> deleteCal(
+            @RequestParam(name = "name") String name,
+            @RequestParam(name = "sessionToken") String sessionToken,
+            @RequestParam(name = "id") Optional<Long> id,
+            @RequestParam(name = "tutorId") Optional<Long> tutorId,
+            @RequestParam(name = "studentId") Optional<Long> studentId) {
+        boolean result = authService.getAuthentication(name, sessionToken);
+        if (!result) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
 
+        if (id.isPresent()) {
+            bookmarkService.deleteBookmarkById(id.get());
+        } else {
+            bookmarkService.deleteBookmarkByStudentAndTutor(studentId.get(), tutorId.get());
+        }
+
+        return ResponseEntity.ok().body(null);
+    }
 }

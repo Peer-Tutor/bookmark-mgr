@@ -1,4 +1,4 @@
-package com.peertutor.BookmarMgr.util;
+package com.peertutor.BookmarkMgr.util;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -18,6 +18,7 @@ public class ResponseFilter extends OncePerRequestFilter {
         response.addHeader("Access-Control-Allow-Origin", "*");
         response.addHeader("Access-Control-Request-Method", "*");
         response.addHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        response.addHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
 
         filterChain.doFilter(request, response);
     }
